@@ -14,42 +14,35 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::get();
-        return ProductResources::collection($products);
+        $product = Product::get();
+        return ProductResources::collection($product);
     }
-
     public function create(Request $request)
     {
         $payload = $request->only('name', 'quantity');
         try {
-            $products = Product::create($payload);
+            $product = Product::create($payload);
         } catch (QueryException) {
             throw ProductException::create();
         }
-
-
-        return new ProductResources($products);
+        return new ProductResources($product);
     }
     public function show(int $id)
     {
-        $products = $this->findOrFail($id);
-        
-        return new ProductResources($products);
+        $product = $this->findOrFail($id);
+        return new ProductResources($product);
     }
-
     public function update(int $id, Request $request)
     {
         $playload = $request->only('name', 'quantity');
-        $products = $this->findOrfail($id);
+        $product = $this->findOrfail($id);
         try {
-            $products->update($playload);
+            $product->update($playload);
         } catch (QueryException) {
             throw ProductException::update();
         }
-        // return response()->json($employee, 200);
-        return new ProductResources($products);
+        return new ProductResources($product);
     }
-
     public function findOrFail(int $id)
     {
         try {
@@ -58,15 +51,14 @@ class ProductController extends Controller
             throw ProductException::notFound();
         }
     }
-
     public function delete(int $id)
     {
-        $products = $this->findOrFail($id);
+        $product = $this->findOrFail($id);
         try {
-            $products->delete();
+            $product->delete();
         } catch (QueryException) {
             throw ProductException::delete();
         }
-        return response()->json(['message' => 'Employee successfully deleted'], 200);
+        return response()->json(['message' => 'Product successfully deleted'], 200);
     }
 }
