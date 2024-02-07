@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\BarangayController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +39,36 @@ Route::group(['prefix'=> 'product'], function () {
     Route::put('/{id}',[ProductController::class,'update']);
     Route::delete('/{id}',[ProductController::class,'delete']);
 });
+
+Route::group(['prefix'=> 'company'], function () {
+    Route::get('/',[CompanyController::class,'index']);
+    Route::get('/{id}',[CompanyController::class,'show']);
+    Route::post('/',[CompanyController::class,'create']);
+    Route::put('/{id}',[CompanyController::class,'update']);
+    Route::delete('/{id}',[CompanyController::class,'delete']);
+});
+
+Route::group(['prefix'=> 'department'], function () {
+    Route::get('/',[DepartmentController::class,'index']);
+    Route::get('/{id}',[DepartmentController::class,'show']);
+    Route::post('/',[DepartmentController::class,'create']);
+    Route::put('/{id}',[DepartmentController::class,'update']);
+    Route::delete('/{id}',[DepartmentController::class,'delete']);
+});
+
+Route::group(['prefix'=> 'student'], function () {
+    Route::get('/',[StudentController::class,'index']);
+    Route::get('/{id}',[StudentController::class,'show']);
+    Route::post('/',[StudentController::class,'create']);
+    Route::put('/{id}',[StudentController::class,'update']);
+    Route::delete('/{id}',[StudentController::class,'delete']);
+});
+
+Route::group(['prefix'=> 'barangay'], function () {
+    Route::get('/',[BarangayController::class,'index']);
+    Route::get('/{id}',[BarangayController::class,'show']);
+    Route::post('/',[BarangayController::class,'create']);
+    Route::put('/{id}',[BarangayController::class,'update']);
+    Route::delete('/{id}',[BarangayController::class,'delete']);
+});
+

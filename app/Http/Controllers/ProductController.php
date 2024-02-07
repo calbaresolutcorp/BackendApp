@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ProductException;
-use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\ProductResources;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
