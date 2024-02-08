@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\OrderQuantityinsufficientRule;
+use App\Rules\ProductNameExistRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOrderRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,19 +15,20 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => ['required', 'max:100', 'numeric'],
-            'quantity' => $this->quantityRules()
+            'name' => $this->nameRules(),
+            'quantity' => ['required', 'max:100000', 'numeric'],
         ];
     }
-    public function quantityRules()
+    public function nameRules()
     {
         $rules = [
-            'required'
+            'required',
+            'max:30'
         ];
         if (request()->method == 'PUT') {
-            array_push($rules, new OrderQuantityinsufficientRule(request()->id));
+            array_push($rules, new ProductNameExistRule(request()->id));
         } else {
-            array_push($rules, new OrderQuantityinsufficientRule(request()->product_id));
+            array_push($rules, new ProductNameExistRule());
         }
         return $rules;
     }

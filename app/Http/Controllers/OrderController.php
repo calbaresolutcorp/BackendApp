@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\OrderException;
+use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -24,9 +25,10 @@ class OrderController extends Controller
         $order = Order::get();
         return OrderResource::collection($order);
     }
-    public function create(Request $request)
+    public function create(StoreOrderRequest $request)
     {
-        $payload = $request->only('product_id', 'quantity');
+        // $payload = $request->only('product_id', 'quantity');
+        $payload = $request->validated();
         try {
             $order = Order::create($payload);
         } catch (QueryException) {
@@ -39,12 +41,12 @@ class OrderController extends Controller
         $order = $this->findOrFail($id);
         return new OrderResource($order);
     }
-    public function update(int $id, Request $request)
+    public function update(int $id, StoreOrderRequest $request)
     {
-        $playload = $request->only('product_id', 'quantity');
+        $payload = $request->validated();
         $order = $this->findOrfail($id);
         try {
-            $order->update($playload);
+            $order->update($payload);
         } catch (QueryException) {
             throw OrderException::update();
         }

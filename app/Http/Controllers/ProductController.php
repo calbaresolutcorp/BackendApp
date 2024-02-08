@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ProductException;
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResources;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -16,9 +17,10 @@ class ProductController extends Controller
         $product = Product::get();
         return ProductResources::collection($product);
     }
-    public function create(Request $request)
+    public function create(StoreProductRequest $request)
     {
-        $payload = $request->only('name', 'quantity');
+        // $payload = $request->only('name', 'quantity');
+        $payload = $request->validated();
         try {
             $product = Product::create($payload);
         } catch (QueryException) {
@@ -31,12 +33,13 @@ class ProductController extends Controller
         $product = $this->findOrFail($id);
         return new ProductResources($product);
     }
-    public function update(int $id, Request $request)
+    public function update(int $id, StoreProductRequest $request)
     {
-        $playload = $request->only('name', 'quantity');
+        // $playload = $request->only('name', 'quantity');
+        $payload = $request->validated();
         $product = $this->findOrfail($id);
         try {
-            $product->update($playload);
+            $product->update($payload);
         } catch (QueryException) {
             throw ProductException::update();
         }

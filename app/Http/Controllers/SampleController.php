@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\SampleException;
+use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\StoreSampleRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use GuzzleHttp\Psr7\Query;
@@ -18,10 +20,10 @@ class SampleController extends Controller
         // return response()->json($employees, 200);
         return EmployeeResource::collection($employees);
     }
-    public function create(Request $request)
+    public function create(StoreSampleRequest $request)
     {
-        $payload = $request->only('employee_id', 'name', 'position', 'address', 'gender', 'birthday');
-        // dd($payload);
+        // $payload = $request->only('employee_id', 'name', 'position', 'address', 'gender', 'birthday');
+        $payload = $request->validated();
         try {
             $employee = Employee::create($payload);
         } catch (QueryException) {
@@ -40,12 +42,13 @@ class SampleController extends Controller
         return new EmployeeResource($employee);
     }
 
-    public function update(int $id, Request $request)
+    public function update(int $id, StoreSampleRequest $request)
     {
-        $playload = $request->only('employee_id', 'name', 'position', 'address', 'gender', 'birthday');
+        // $playload = $request->only('employee_id', 'name', 'position', 'address', 'gender', 'birthday');
+        $payload = $request->validated();
         $employee = $this->findOrfail($id);
         try {
-            $employee->update($playload);
+            $employee->update($payload);
         } catch (QueryException) {
             throw SampleException::update();
         }
