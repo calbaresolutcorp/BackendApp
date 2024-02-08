@@ -6,16 +6,20 @@ use Exception;
 
 class CompanyException extends Exception
 {
-    public  static function create(){
+    public static function create()
+    {
         return new self("Create company cannot be processed");
     }
-    public  static function update(){
+    public static function update()
+    {
         return new self("Update company cannot be processed");
     }
-    public  static function delete(){
+    public static function delete()
+    {
         return new self("Delete company cannot be processed");
     }
-    public static function notFound(){
+    public static function notFound()
+    {
         return new self("Company not found");
     }
 }
