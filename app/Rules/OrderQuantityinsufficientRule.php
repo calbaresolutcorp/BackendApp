@@ -21,10 +21,10 @@ class OrderQuantityinsufficientRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        // $orders = Order::where("product_id", $this->orderId)->sum("quantity");
+        $orders = Order::where("product_id", $this->orderId)->sum("quantity");
         $product = Product::where("id", $this->orderId)->first();
-        $total = $product->quantity - $value;
-
+        $sum = $orders + $value;
+        $total = $product->quantity - $sum;
         if ($total <= 0) {
             $fail('Insufficient :attribute');
         }
