@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SampleController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -81,3 +82,12 @@ Route::group(['prefix' => 'order'], function () {
     Route::put('/{id}', [OrderController::class, 'update']);
     Route::delete('/{id}', [OrderController::class, 'delete']);
 });
+
+
+Route::post('/', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//     Route::group(['prefix' => 'user'], function () {
+        
+//     });
+// });

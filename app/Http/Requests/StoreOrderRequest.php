@@ -22,7 +22,8 @@ class StoreOrderRequest extends FormRequest
     public function quantityRules()
     {
         $rules = [
-            'required'
+            'required',
+            'numeric'
         ];
         if (request()->method == 'PUT') {
             array_push($rules, new OrderQuantityinsufficientRule(request()->id));
